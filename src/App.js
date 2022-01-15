@@ -4,19 +4,23 @@ class Clock extends Component {
   state = {
     date: new Date(),
   };
-
   timerId;
 
   static defaultProps = {
-    list = [],
+    list: [],
   };
 
   constructor(props) {
     super(props);
-    this.list = React.createRef();
+
+    this.listRef = React.createRef();
   }
 
-  static getDerrivedStateFromProps(props, state) {
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  static getDerivedStateFromProps(props, state) {
     return {};
   }
 
@@ -32,9 +36,7 @@ class Clock extends Component {
     return null;
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // if (this.props.userId !== prevProps.userId) {
-    // this.setState((pState) => ({ date: new Date() }));
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (snapshot !== null) {
       const list = this.listRef.current;
       list.scrollTop = list.scrollHeight - snapshot;
@@ -47,32 +49,33 @@ class Clock extends Component {
 
   render() {
     return (
-      <>
-        <h1>Lesson 5. DateTick</h1>
-        <p>{this.state.date.toLocaleTimeString()}</p>
+      <div className="App">
+        <h1>Example</h1>
+        <h5>{this.state.date.toLocaleTimeString()}</h5>
         <div ref={this.listRef}>Content</div>
-      </>
+      </div>
     );
   }
 
   tick() {
-    this.setState((prevState) => ({ date: new Date() }));
-    //this.state = {date: new Date()};  Don't do like this!
     console.log(this.state.date.toLocaleTimeString());
+    this.setState((prevState) => ({ date: new Date() }));
   }
 }
 
 export default class App extends Component {
- list1 = [];
- list2 = [];
- 
+  state = {
+    mounted: true,
+  };
   render() {
     return (
-      <>
+      <div className="App">
+        <button onClick={() => this.setState({ mounted: !this.state.mounted })}>
+          button
+        </button>
+        {this.state.mounted && <Clock />}
         {false ? <Clock /> : ''}
-        <Clock list={this.list1} />
-        {false ? <Clock /> : ''}
-      </>
+      </div>
     );
   }
 }
