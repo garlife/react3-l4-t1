@@ -7,9 +7,17 @@ class Clock extends Component {
 
   timerId;
 
+  static defaultProps = {
+    list = [],
+  };
+
   constructor(props) {
     super(props);
     this.list = React.createRef();
+  }
+
+  static getDerrivedStateFromProps(props, state) {
+    return {};
   }
 
   componentDidMount() {
@@ -55,11 +63,14 @@ class Clock extends Component {
 }
 
 export default class App extends Component {
+ list1 = [];
+ list2 = [];
+ 
   render() {
     return (
       <>
         {false ? <Clock /> : ''}
-        <Clock />
+        <Clock list={this.list1} />
         {false ? <Clock /> : ''}
       </>
     );
