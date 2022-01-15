@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 
-class Clock extends Component {
+class Clock extends PureComponent {
   state = {
     date: new Date(),
   };
@@ -17,7 +17,7 @@ class Clock extends Component {
   }
 
   shouldComponentUpdate() {
-    return false;
+    return true;
   }
 
   static getDerivedStateFromProps(props, state) {
